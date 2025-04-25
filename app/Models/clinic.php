@@ -9,4 +9,5 @@ class clinic extends Model
 {
     /** @use HasFactory<\Database\Factories\ClinicFactory> */
     use HasFactory;
+    protected $fillable =[];
 }
