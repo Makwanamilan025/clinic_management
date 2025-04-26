@@ -17,11 +17,17 @@ class DatabaseSeeder extends Seeder
     {
 
         User::updateOrCreate(
-            ['email' => 'test@example.com'],
+            ['email' => 'admin@gmail.com'],
             [
-                'name' => 'Test User',
-                'password' => Hash::make('test@example.com'),
-            ]
+                'name' => 'admin',
+                'password' => Hash::make('admin@gmail.com'),
+            ],
+
+            ['email' => 'user@example.com'],
+            [
+                'name' => 'User',
+                'password' => Hash::make('user@example.com'),
+            ],
         );
 
         Clinic::factory(10)->create();

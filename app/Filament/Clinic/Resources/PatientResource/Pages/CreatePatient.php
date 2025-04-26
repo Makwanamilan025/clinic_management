@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\PatientResource\Pages;
+namespace App\Filament\Clinic\Resources\PatientResource\Pages;
 
-use App\Filament\Resources\PatientResource;
+use App\Filament\Clinic\Resources\PatientResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
