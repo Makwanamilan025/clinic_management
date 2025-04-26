@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\ClinicResource\Pages;
+use App\Filament\Admin\Resources\ClinicResource\Pages;
 use App\Filament\Resources\ClinicResource\RelationManagers;
 use App\Models\Clinic;
 use Filament\Forms;

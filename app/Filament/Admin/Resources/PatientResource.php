@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\PatientResource\Pages;
+use App\Filament\Admin\Resources\PatientResource\Pages;
 use App\Models\Patient;
 use Filament\Forms;
 use Filament\Forms\Form;

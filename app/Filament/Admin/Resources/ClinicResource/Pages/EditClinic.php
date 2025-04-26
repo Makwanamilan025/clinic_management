@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ClinicResource\Pages;
+namespace App\Filament\Admin\Resources\ClinicResource\Pages;
 
-use App\Filament\Resources\ClinicResource;
+use App\Filament\Admin\Resources\ClinicResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
