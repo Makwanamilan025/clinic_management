@@ -246,7 +246,7 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Add relation managers here if needed
+            RelationManagers\SamePhonePatientsRelationManager::class,
         ];
     }
 

@@ -1,32 +1,24 @@
 <?php
 
-namespace App\Filament\Clinic\Resources\PatientResource\Pages;
+namespace App\Filament\Clinic\Resources\PatientResource\RelationManagers;
 
-use App\Filament\Clinic\Resources\PatientResource;
 use App\Models\Patient;
-use Filament\Actions;
-use Filament\Resources\Pages\ViewRecord;
+use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\RelationManagers\RelationManager;
 
-class ViewPatient extends ViewRecord
+class SamePhonePatientsRelationManager extends RelationManager
 {
-    protected static string $resource = PatientResource::class;
+    protected static string $relationship = 'samePhonePatients';
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\EditAction::make(),
-        ];
-    }
+    protected static ?string $title = 'Patients with Same Mobile Number';
 
     public function table(Table $table): Table
     {
-        $currentPatient = $this->getRecord();
-
         return $table
-            ->query(Patient::query()->where('phone', $currentPatient->phone)->where('id', '!=', $currentPatient->id))
             ->columns([
                 Tables\Columns\TextColumn::make('full_name')
                     ->label('Patient Name')
@@ -52,7 +44,11 @@ class ViewPatient extends ViewRecord
                         default => 'gray',
                     }),
             ])
-            ->heading('Patients with Same Mobile Number')
-            ->emptyStateHeading('No other patients with this mobile number');
+            ->filters([
+                // Add filters if needed
+            ])
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+            ]);
     }
 }

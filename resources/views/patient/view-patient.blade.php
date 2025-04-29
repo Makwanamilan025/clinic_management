@@ -54,5 +54,9 @@
                 </div>
             </div>
         </x-filament::card>
+
+    <x-filament::card>
+        {{ $this->table }}
+    </x-filament::card>
     </div>
 </x-filament::page>

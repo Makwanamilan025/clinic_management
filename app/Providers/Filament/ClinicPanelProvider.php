@@ -55,7 +55,7 @@ class ClinicPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                \App\Http\Middleware\ClinicAccess::class, // ✅ Add this
+                \App\Http\Middleware\ClinicAccess::class, 
             ]);
     }
 }

@@ -30,4 +30,9 @@ class Patient extends Model
     {
         return $this->belongsTo(User::class, 'clinic_id');
     }
+    public function samePhonePatients()
+    {
+        return $this->hasMany(Patient::class, 'phone', 'phone')
+            ->where('id', '!=', $this->id);
+    }
 }
