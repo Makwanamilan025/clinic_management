@@ -9,7 +9,8 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-
+use App\Models\Visit;
+use Filament\Support\Enums\MaxWidth;
 class ViewPatient extends ViewRecord
 {
     protected static string $resource = PatientResource::class;
@@ -21,38 +22,34 @@ class ViewPatient extends ViewRecord
         ];
     }
 
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            \App\Filament\Clinic\Resources\PatientResource\Widgets\PatientProfileOverview::class,
+        ];
+    }
+
+
     public function table(Table $table): Table
     {
         $currentPatient = $this->getRecord();
 
         return $table
-            ->query(Patient::query()->where('phone', $currentPatient->phone)->where('id', '!=', $currentPatient->id))
+            ->query(Visit::query()->where('patient_id', $currentPatient->id))
             ->columns([
-                Tables\Columns\TextColumn::make('full_name')
-                    ->label('Patient Name')
-                    ->formatStateUsing(fn (Patient $record) => "{$record->first_name} {$record->last_name}")
-                    ->searchable(['first_name', 'last_name']),
+                Tables\Columns\TextColumn::make('visit_date')
+                    ->date('d/m/Y')
+                    ->label('Visit Date'),
 
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('doctor_name')
+                    ->label('Doctor'),
 
-                Tables\Columns\TextColumn::make('age')
-                    ->label('Age')
-                    ->state(fn (Patient $record) => $record->date_of_birth->age),
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Created Date')
-                    ->dateTime('d/m/Y H:i'),
-
-                Tables\Columns\TextColumn::make('gender')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'male' => 'primary',
-                        'female' => 'pink',
-                        default => 'gray',
-                    }),
+                Tables\Columns\TextColumn::make('notes')
+                    ->limit(50)
+                    ->label('Visit Notes'),
             ])
-            ->heading('Patients with Same Mobile Number')
-            ->emptyStateHeading('No other patients with this mobile number');
+            ->heading('Visit History')
+            ->emptyStateHeading('No visits found');
     }
+
 }

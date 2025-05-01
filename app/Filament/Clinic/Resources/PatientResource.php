@@ -72,7 +72,10 @@ class PatientResource extends Resource
                             ->validationMessages([
                                 'required' => 'Please select a gender',
                             ]),
-                    ])->columns(2),
+                    ])
+                    ->columns(2)
+                    ->visible(fn (string $context) => $context !== 'view'),
+
 
                 Forms\Components\Section::make('Contact Information')
                     ->schema([
@@ -103,7 +106,9 @@ class PatientResource extends Resource
                             ->validationMessages([
                                 'max' => 'Address is too long',
                             ]),
-                    ])->columns(2),
+                    ])
+                    ->columns(2)
+                    ->visible(fn (string $context) => $context !== 'view'),
 
                 Forms\Components\Section::make('Medical Information')
                     ->schema([
@@ -122,17 +127,20 @@ class PatientResource extends Resource
                             ->validationMessages([
                                 'in' => 'Invalid blood type selected',
                             ]),
-                    ]),
+                    ])->visible(fn (string $context) => $context !== 'view'),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Patient::query()->withCount('visits'))
             ->columns([
-                Tables\Columns\TextColumn::make('full_name')
+                Tables\Columns\TextColumn::make('full_name_with_visits')
                     ->label('Patient Name')
-                    ->formatStateUsing(fn (Patient $record) => "{$record->first_name} {$record->last_name}")
+                    ->state(function (Patient $record) {
+                        return "{$record->first_name} {$record->last_name} ({$record->visits_count} visits)";
+                    })
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(query: function (Builder $query, string $direction) {
                         $query->orderBy('first_name', $direction)
@@ -242,11 +250,12 @@ class PatientResource extends Resource
                     ->label('Create patient'),
             ]);
     }
-
     public static function getRelations(): array
     {
         return [
-            RelationManagers\SamePhonePatientsRelationManager::class,
+            // RelationManagers\SamePhonePatientsRelationManager::class,
+            \App\Filament\Clinic\Resources\PatientResource\RelationManagers\VisitRelationManager::class,
+
         ];
     }
 

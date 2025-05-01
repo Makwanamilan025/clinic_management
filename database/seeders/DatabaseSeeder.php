@@ -30,6 +30,6 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        Clinic::factory(10)->create();
+        // Clinic::factory(10)->create();
     }
 }

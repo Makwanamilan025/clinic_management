@@ -23,8 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
-                'phone',
-                'avatar',
+        'phone',
+        'avatar',
+        'clinic_id',
     ];
 
     protected $casts = [
@@ -53,4 +54,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        public function clinic()
+        {
+            return $this->belongsTo(Clinic::class);
+        }
 }

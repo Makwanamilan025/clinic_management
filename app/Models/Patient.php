@@ -15,6 +15,7 @@ class Patient extends Model
         'phone',
         'address',
         'blood_type',
+        'clinic_id',
     ];
 
     protected $casts = [
@@ -28,11 +29,23 @@ class Patient extends Model
 
     public function clinic()
     {
-        return $this->belongsTo(User::class, 'clinic_id');
+        return $this->belongsTo(Clinic::class);
     }
-    public function samePhonePatients()
+
+        public function visits()
     {
-        return $this->hasMany(Patient::class, 'phone', 'phone')
-            ->where('id', '!=', $this->id);
+        return $this->hasMany(Visit::class);
     }
+
+        public function getNameWithVisitCountAttribute(): string
+    {
+        return $this->first_name . $this->visits()->count();
+    }
+    // public function samePhonePatients()
+    // {
+    //     return $this->hasMany(Patient::class, 'phone', 'phone')
+    //         ->where('id', '!=', $this->id);
+    // }
+
+
 }

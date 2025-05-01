@@ -27,7 +27,8 @@ class ClinicPanelProvider extends PanelProvider
         return $panel
             ->id('clinic')
             ->path('clinic')
-            ->login(Login::class)
+            ->brandName(' Clinic ')
+            ->login()
             ->authGuard('web')
             ->colors([
                 'primary' => Color::Amber,
@@ -55,7 +56,7 @@ class ClinicPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                \App\Http\Middleware\ClinicAccess::class, 
+                \App\Http\Middleware\ClinicAccess::class,
             ]);
     }
 }

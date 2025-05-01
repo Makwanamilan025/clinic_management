@@ -20,4 +20,14 @@ class Clinic extends Model
         'opening_time' => 'datetime:H:i',
         'closing_time' => 'datetime:H:i',
     ];
+
+     public function users()
+     {
+         return $this->hasMany(User::class);
+     }
+
+     public function patients()
+     {
+         return $this->hasMany(Patient::class);
+     }
 }
